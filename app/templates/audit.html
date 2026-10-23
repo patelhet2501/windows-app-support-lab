@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Audit - {{ app_name }}{% endblock %}
+{% block body %}
+<h1>Recent audit rows</h1>
+<p class="muted">Written by <code>audit.trg_Orders_Audit</code> on every insert, update and delete.</p>
+<table>
+  <thead><tr><th>#</th><th>Order</th><th>Action</th><th>Columns</th>
+             <th>SQL principal</th><th>App user</th><th>When (UTC)</th></tr></thead>
+  <tbody>
+  {% for r in rows %}
+    <tr>
+      <td>{{ r.AuditId }}</td><td>{{ r.OrderId }}</td><td>{{ r.Action }}</td>
+      <td><code>{{ r.ChangedColumns or '' }}</code></td>
+      <td class="muted">{{ r.ChangedBy }}</td>
+      <td class="muted">{{ r.AppUser or '' }}</td>
+      <td>{{ r.ChangedAt }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="7" class="muted">No audit rows yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

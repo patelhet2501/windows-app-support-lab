@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Orders - {{ app_name }}{% endblock %}
+{% block body %}
+<h1>Orders</h1>
+{% if error %}<p class="bad">{{ error }}</p>{% endif %}
+<p class="muted">Acting as <code>{{ user }}</code>. Status changes fire the audit trigger.</p>
+<table>
+  <thead><tr><th>Id</th><th>Order</th><th>Customer</th><th>Status</th>
+             <th class="num">Amount</th><th>Ordered</th><th>Last modified by</th><th></th></tr></thead>
+  <tbody>
+  {% for o in orders %}
+    <tr>
+      <td>{{ o.OrderId }}</td>
+      <td><code>{{ o.OrderNumber }}</code></td>
+      <td>{{ o.CustomerName }}</td>
+      <td>{{ o.Status }}</td>
+      <td class="num">{{ '%.2f'|format(o.Amount) }}</td>
+      <td>{{ o.OrderDate }}</td>
+      <td class="muted">{{ o.LastModifiedBy }}</td>
+      <td>
+        <form method="post" action="{{ url_for('update_status', order_id=o.OrderId) }}">
+          <select name="status">
+            {% for s in ['New','Picked','Shipped','Cancelled'] %}
+              <option value="{{ s }}" {% if s == o.Status %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit">Set</button>
+        </form>
+      </td>
+    </tr>
+  {% else %}
+    <tr><td colspan="8" class="muted">No orders.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

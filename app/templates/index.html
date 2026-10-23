@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Status</h1>
+<table class="kv">
+  <tr><th>Database</th>
+      <td>{% if db_ok %}<span class="ok">reachable</span> ({{ db_ms }} ms)
+          {% else %}<span class="bad">unavailable</span> &mdash; {{ db_detail.kind }}: {{ db_detail.message }}{% endif %}</td></tr>
+  <tr><th>Worker identity</th><td><code>{{ identity }}</code></td></tr>
+  <tr><th>Backend</th><td><code>{{ backend }}</code></td></tr>
+  <tr><th>Connection string</th><td><code>{{ connection }}</code></td></tr>
+</table>
+{% if not db_ok %}
+<p class="bad">The app is up but its database dependency is not. Start with
+<code>runbooks/00-index.md</code> and match the failure kind above.</p>
+{% endif %}
+{% endblock %}

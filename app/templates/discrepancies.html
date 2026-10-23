@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Discrepancies - {{ app_name }}{% endblock %}
+{% block body %}
+<h1>Header vs. line-total variance</h1>
+<p class="muted">An order's <code>Amount</code> should equal the sum of its line totals.
+Rows here are the data discrepancies the T-SQL in <code>sql/03_investigate.sql</code> chases down.</p>
+<table>
+  <thead><tr><th>Id</th><th>Order</th><th class="num">Header</th><th class="num">Lines</th><th class="num">Variance</th></tr></thead>
+  <tbody>
+  {% for r in rows %}
+    <tr>
+      <td>{{ r.OrderId }}</td><td><code>{{ r.OrderNumber }}</code></td>
+      <td class="num">{{ '%.2f'|format(r.HeaderAmount) }}</td>
+      <td class="num">{{ '%.2f'|format(r.LineTotal) }}</td>
+      <td class="num bad">{{ '%.2f'|format(r.Variance) }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5" class="ok">No variances. Header amounts agree with line totals.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

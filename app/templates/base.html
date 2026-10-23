@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ app_name }}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <strong>{{ app_name }}</strong> <span class="muted">app-support lab v{{ lab_version }}</span>
+    <nav>
+      <a href="{{ url_for('index') }}">Status</a>
+      <a href="{{ url_for('orders') }}">Orders</a>
+      <a href="{{ url_for('discrepancies') }}">Discrepancies</a>
+      <a href="{{ url_for('audit') }}">Audit</a>
+      <a href="{{ url_for('health') }}">/health</a>
+      <a href="{{ url_for('diag') }}">/diag</a>
+    </nav>
+  </header>
+  <main>{% block body %}{% endblock %}</main>
+  <footer class="muted">{{ now.strftime('%Y-%m-%d %H:%M:%S') }} UTC</footer>
+</body>
+</html>

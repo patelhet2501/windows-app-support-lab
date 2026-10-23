@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# App runtime output (never commit logs or the dev smoke database)
+app/logs/
+logs/
+app/dev/logs/
+app/dev/*.db
+httpplatform-stdout*.log
+
+# Lab state and local output
+investigate-output.txt
+*.out
+
+# Secrets: nothing in this repo should hold a password, keep it that way
+*.pfx
+*.key
+secrets.ps1
+lab.config.local.ps1
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

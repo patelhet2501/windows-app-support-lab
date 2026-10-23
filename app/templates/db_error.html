@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Database unavailable - {{ app_name }}{% endblock %}
+{% block body %}
+<h1 class="bad">Database unavailable</h1>
+<p>{{ hint }}</p>
+<table class="kv">
+  <tr><th>Failure kind</th><td><code>{{ kind }}</code></td></tr>
+  <tr><th>Message</th><td>{{ message }}</td></tr>
+  <tr><th>SQLSTATE</th><td><code>{{ sqlstate }}</code></td></tr>
+  <tr><th>SQL Server error</th><td><code>{{ native_error }}</code></td></tr>
+  <tr><th>Connection string</th><td><code>{{ connection }}</code></td></tr>
+  <tr><th>Runbook</th><td><code>runbooks/{{ runbook }}</code></td></tr>
+</table>
+{% endblock %}
